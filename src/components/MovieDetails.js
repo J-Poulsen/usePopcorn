@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { OMDB_KEY } from './App';
 import { Loader } from './Loader';
 import StarRating from './StarRating';
+import { useKey } from '../hooks/useKey';
 
 export function MovieDetails({
   selectedId,
@@ -53,17 +54,7 @@ export function MovieDetails({
     onCloseMovie();
   }
 
-  useEffect(() => {
-    const callback = (e) => {
-      if (e.code === 'Escape') onCloseMovie();
-    };
-
-    document.addEventListener('keydown', callback);
-
-    return () => {
-      document.removeEventListener('keydown', callback);
-    };
-  }, [onCloseMovie]);
+  useKey('Escape', onCloseMovie);
 
   useEffect(() => {
     async function getMovieDetails() {
